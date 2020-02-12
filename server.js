@@ -10,6 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+
 // Client routes
 app.get("/notes", function(req, res) {
   res.sendFile(path.join(__dirname, "./public/notes.html"), function(err) {
@@ -30,20 +31,30 @@ app.get("*", function(req, res) {
   });
 });
 
-// API routes
+
+// API route GET
 app.get("/api/notes", function(req, res){
   store.read().then(function(note){
     res.json(note);
   })
 });
 
-app.get("/api/notes", function(req, res){
+// API route POST
+app.post("/api/notes", function(req, res){
+  store.receive().then(function(note){
+    res.json(note);
+  })
+});
+
+// API route DELETE
+app.delete("/api/notes", function(req, res){
   store.receive().then(function(note){
     res.json(note);
   })
 });
 
 
+// 
 app.listen(PORT, function() {
   console.log("Server Listening on: " + PORT);
 });

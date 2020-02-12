@@ -7,9 +7,14 @@ class Store{
     receive(){
         return fs.writeFile ("./db.json", "utf8")
     }
+    delete(){
+        return fs.writeFile ("./db.json", "utf8")
+    }
 
 
 
 };
+
+
 module.exports = Store;
 
