@@ -38,10 +38,12 @@ app.post("/api/notes", function(req, res) {
 });
 
 // API route DELETE
-app.delete("/api/notes", function(req, res) {
-  store.receive().then(function(id) {
-    res.json(id);
+app.delete("/api/notes/:id", function(req, res) {
+  // console.log(req.params.id)
+  store.delete(req.params.id, data => {
+    res.json(data);
   });
+  
 });
 
 app.get("*", function(req, res) {

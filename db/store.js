@@ -9,7 +9,7 @@ const readFileAsync = util.promisify(fs.readFile);
 class Store {
   read() {
     return readFileAsync("./db/db.json", "utf8");
-  };
+  }
 
   receive(note, callback) {
     console.log("NOTE", note);
@@ -26,11 +26,23 @@ class Store {
         return callback(getData);
       });
     });
-  };
+  }
 
-  delete() {
-    return fs.writeFile("./db/db.json", "utf8");
-  };
-};
+  delete(index, callback) {
+    fs.readFile("./db/db.json", "utf8", (err, data) => {
+      if (err) console.log(err);
+
+      let getData = JSON.parse(data);
+      getData.splice(index, 1);
+
+      fs.writeFile("./db/db.json", JSON.stringify(getData), err => {
+        if (err) {
+          console.log(err);
+        }
+        return callback(getData);
+      });
+    });
+  }
+}
 
 module.exports = Store;
