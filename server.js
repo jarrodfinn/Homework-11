@@ -5,7 +5,7 @@ const path = require("path");
 const Store = require("./db/store");
 const store = new Store();
 
-const PORT = 8080;
+const PORT = process.env.PORT || 3000;
 
 // handles body parseing
 app.use(express.json());
