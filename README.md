@@ -34,4 +34,4 @@ SO THAT I can organize my thoughts and keep track of tasks I need to complete
 
 # Heroku Link
 
-https://afternoon-hamlet-87229.herokuapp.com/notes
+ https://afternoon-hamlet-87229.herokuapp.com/
