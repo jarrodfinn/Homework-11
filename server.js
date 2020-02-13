@@ -2,7 +2,8 @@ const fs = require("fs");
 const express = require("express");
 const app = express();
 const path = require("path");
-const store = require("./db/store");
+const Store = require("./db/store");
+const store = new Store();
 
 const PORT = 8080;
 // handles body parseing
@@ -21,6 +22,32 @@ app.get("/notes", function(req, res) {
     }
   });
 });
+
+
+// API route GET
+app.get("/api/notes", function(req, res){
+  store.read().then(function(note){
+    res.json(JSON.parse(note));
+  })
+});
+
+// API route POST
+app.post("/api/notes", function(req, res){
+  store.receive(req.body, (data) => {
+    res.json(data);
+  })
+  // .then(function(note){
+  //   // res.json(JSON.parse(note));
+  // })
+});
+
+// API route DELETE
+app.delete("/api/notes", function(req, res){
+  store.receive().then(function(id){
+    res.json(id);
+  })
+});
+
 app.get("*", function(req, res) {
   res.sendFile(path.join(__dirname, "./public/index.html"), function(err) {
     if (err) {
@@ -30,29 +57,6 @@ app.get("*", function(req, res) {
     }
   });
 });
-
-
-// API route GET
-app.get("/api/notes", function(req, res){
-  store.read().then(function(note){
-    res.json(note);
-  })
-});
-
-// API route POST
-app.post("/api/notes", function(req, res){
-  store.receive().then(function(note){
-    res.json(note);
-  })
-});
-
-// API route DELETE
-app.delete("/api/notes", function(req, res){
-  store.receive().then(function(note){
-    res.json(note);
-  })
-});
-
 
 // 
 app.listen(PORT, function() {
